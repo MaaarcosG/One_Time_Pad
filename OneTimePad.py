@@ -23,7 +23,7 @@ def xor(msg_array, key_array):
 def generate_key(data):
     key = []
     for _ in range(data):
-        key.append(random.choice(string.printable))
+        key.append(random.choice(['0', '1']))
     
     key = ''.join(key)
     #print(key)
