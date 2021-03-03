@@ -23,7 +23,7 @@ def generate_key(data):
         key.append(random.choice(string.printable))
     
     key = ''.join(key)
-    print(key)
+    #print(key)
     return key
 
 def encrypt(msg):
@@ -48,36 +48,35 @@ def decrypt(cypher, key):
     return msg_descifrado
 
 def get_encrypt_file(filename):
-    data_encrypt = open(filename, 'r').read()
+    try:
+        data_encrypt = open(filename, 'r').read()
+        
+        (plaintext, key) = encrypt(data_encrypt)
+        
+        with open('cypher.txt', 'w') as file:
+            file.write(plaintext)
+            
+        with open('key.txt', 'w') as file:
+            file.write(key)
+    except:
+        print('Error: %s' % sys.exc_info()[0])
 
-    (plaintext, key) = encrypt(data_encrypt)
-
-    # creamos los archivos
-    with open('cypher.txt', 'w') as file:
-        file.write(plaintext)
-    
-    # creamos los archivos
-    with open('key.txt', 'w') as file:
-        file.write(key)
     
 def get_decrypt_file(filename, key_file):
-    with open(filename, 'r') as file:
-        msg = file.read()
-    
-    with open(key_file, 'r') as file:
-        key = file.read()
-
-    msg_descrypt = decrypt(msg, key)
-    
-    with open('decrypt.txt', 'w') as file:
-        file.write(msg_descrypt)
+    try:
+        msg = open(filename, 'r').read()
+        key = open(key_file, 'r').read()
+        
+        msg_descrypt = decrypt(msg, key)
+        
+        with open('decrypt.txt', 'w') as file:
+            file.write(msg_descrypt)
+    except:
+        print('Error: %s' % sys.exc_info()[0])
 
 if __name__ == '__main__':
-
-    from sys import argv
-
-    if(len(argv) == 2):
-        get_encrypt_file(argv[1])
+    if(len(sys.argv) == 2):
+        get_encrypt_file(sys.argv[1])
 
     else:
-        print('Mensaje: %s' % get_decrypt_file(argv[1], argv[2]))
+        get_decrypt_file(sys.argv[1], sys.argv[2])
