@@ -23,7 +23,7 @@ def xor(msg_array, key_array):
 def generate_key(data):
     key = []
     for _ in range(data):
-        key.append(random.choice(['0', '1']))
+        key.append(random.choice(string.printable))
     
     key = ''.join(key)
     #print(key)
@@ -33,31 +33,16 @@ def encrypt(msg):
     msg_array = string_to_bitarray(msg)
     key_array = string_to_bitarray(generate_key(len(msg)))
 
-    ''' 
-    Para binario 1 y 0'
+    #Para binario 1 y 0
     msg_cifrado = xor(msg_array, key_array).to01()
     key_gene = key_array.to01()
-    '''
-
-    ''' Para characters '''
-    msg_cifrado = xor(msg_array, key_array).tobytes().decode('utf-8')
-    key_gene = key_array.tobytes().decode('utf-8')
 
     # retorna en bytes el mensaje cifrado y la llave generada
     return msg_cifrado, key_gene
     
 def decrypt(cypher, key):
-    cypher_array = bitarray.bitarray()
-    cypher_array.frombytes(cypher.encode('utf-8'))
-    #print(cypher_array)
-    key_array = bitarray.bitarray()
-    key_array.frombytes(key.encode('utf-8'))
-
-    # retornamos el mensaje descifrado
-    ''' 
-    Para binario 1 y 0
-    msg_descifrado = xor(cypher_array, key_array).to01()
-    '''
+    cypher_array = bitarray.bitarray(cypher)
+    key_array = bitarray.bitarray(key)
 
     msg_descifrado = xor(cypher_array, key_array).tobytes().decode('utf-8')
 
