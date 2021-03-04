@@ -62,10 +62,41 @@ def get_decrypt_file(filename, key_file):
     with open('decrypt.txt', 'w') as file:
         file.write(msg_descrypt)
 
+def create_txt(msg: str):
+    with open('text.txt', 'w+') as file:
+        file.write(msg)
 
 if __name__ == '__main__':
+    while True:
+        opcion = input('Bienvenidos!\n 1. Encriptar\n 2. Desencriptar\n 3. Salir\nEscoga lo que quiere hacer: ')
+        
+        if opcion == '1':
+            print('*'*40)
+            msg = input('Escriba el mensaje que desea mandar: ')
+            with open('text.txt', 'w') as file:
+                file.write(msg)
+            
+            print(' ARCHIVO text.txt CREADO CORRECTAMENTE\n MENSAJE ENCRIPTADO')
+            get_encrypt_file('text.txt')
+            break
+
+        elif opcion == '2':
+            print('*'*40)
+            filename = input('Ingrese el nombre del archivo encriptado: ')
+            key_file = input('Ingrese el nombre con la llave: ')
+            get_decrypt_file(filename, key_file)
+            break
+        
+        else:
+            break
+    
+    '''
+    PARA RECIBIR DE CONSOLA
     if(len(sys.argv) == 2):
         get_encrypt_file(sys.argv[1])
 
     else:
         get_decrypt_file(sys.argv[1], sys.argv[2])
+    '''
+
+
